@@ -535,8 +535,41 @@ function StepResult({ project, systems, details, cabling, rates }) {
   const grandTotal = est.total + cablingTotal;
   const [lead, setLead] = useState({ name: "", phone: "", email: "" });
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
   const systemLabels = systems.map(s => SYSTEMS.find(x => x.id === s)?.label).join(", ");
+
+  const sendLead = async () => {
+    setSending(true);
+    setError("");
+    try {
+      await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          service_id: "service_c4i6b1t",
+          template_id: "template_vtjpppj",
+          user_id: "cp949tIM01NdHiFvz",
+          template_params: {
+            from_name: lead.name,
+            phone: lead.phone,
+            reply_to: lead.email || "nie podano",
+            project_name: project.name || "Bez nazwy",
+            project_type: project.type || "—",
+            area: project.area || "—",
+            rooms: project.rooms || "—",
+            systems: systemLabels,
+            total: formatPLN(grandTotal),
+          }
+        })
+      });
+      setSent(true);
+    } catch (e) {
+      setError("Błąd wysyłki — zadzwoń lub napisz bezpośrednio na kontakt@thome.pl");
+    }
+    setSending(false);
+  };
 
   return (
     <div className="step-content result-step">
@@ -634,9 +667,10 @@ function StepResult({ project, systems, details, cabling, rates }) {
             <input placeholder="Numer telefonu" value={lead.phone} onChange={e => setLead({ ...lead, phone: e.target.value })} />
             <input placeholder="Adres e-mail (opcjonalnie)" value={lead.email} onChange={e => setLead({ ...lead, email: e.target.value })} />
           </div>
-          <button className="lead-btn" onClick={() => setSent(true)} disabled={!lead.name || !lead.phone}>
-            Wyślij zapytanie do tHOME →
+          <button className="lead-btn" onClick={sendLead} disabled={!lead.name || !lead.phone || sending}>
+            {sending ? "Wysyłanie..." : "Wyślij zapytanie do tHOME →"}
           </button>
+          {error && <div className="lead-error">{error}</div>}
           <div className="lead-contact-row">
             <a href="mailto:kontakt@thome.pl">kontakt@thome.pl</a>
             <span>·</span>
@@ -1149,6 +1183,7 @@ const CSS = `
   .lead-fields input { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 13px 14px; color: var(--text); font-size: 16px; font-family: 'Inter', sans-serif; outline: none; width: 100%; }
   .lead-fields input:focus { border-color: var(--accent); }
   .lead-fields input::placeholder { color: var(--muted); }
+  .lead-error { font-size: 12px; color: #f87171; margin-top: 8px; text-align: center; }
   .lead-contact-row { display: flex; justify-content: center; gap: 10px; font-size: 12px; color: var(--muted); margin-top: 12px; flex-wrap: wrap; }
   .lead-contact-row a { color: var(--accent); text-decoration: none; }
   .lead-success { text-align: center; padding: 28px 16px; background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.3); border-radius: var(--radius); }
