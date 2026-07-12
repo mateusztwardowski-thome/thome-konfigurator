@@ -267,7 +267,7 @@ function HeroSection() {
       <div className="flex-1 flex flex-col justify-end px-6 md:px-10 relative">
         <div className="overflow-hidden">
           <FadeIn delay={0.15} y={40}>
-            <h1 className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[8vw] sm:text-[8.5vw] md:text-[9vw] lg:text-[9.5vw] mt-6 sm:mt-4 md:-mt-5">
+            <h1 className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[7vw] sm:text-[7.3vw] md:text-[7.4vw] lg:text-[7.5vw] mt-6 sm:mt-4 md:-mt-5">
               Cześć, jestem tHome
             </h1>
           </FadeIn>
