@@ -268,7 +268,7 @@ function HeroSection() {
         <div className="overflow-hidden">
           <FadeIn delay={0.15} y={40}>
             <h1 className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[8vw] sm:text-[8.5vw] md:text-[9vw] lg:text-[9.5vw] mt-6 sm:mt-4 md:-mt-5">
-              Cześć, jestem wiktory
+              Cześć, jestem tHome
             </h1>
           </FadeIn>
         </div>
@@ -301,7 +301,7 @@ function HeroSection() {
           >
             <img
               src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
-              alt="Portret Wiktory"
+              alt="Portret tHome"
               className="w-full h-auto select-none pointer-events-none"
             />
           </Magnet>
