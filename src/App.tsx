@@ -9,6 +9,7 @@ function GlobalStyles() {
     <style>{`
       @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap');
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
       html, body, #root { background: #0C0C0C; font-family: 'Kanit', sans-serif; }
       .hero-heading {
         background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
@@ -225,6 +226,20 @@ function LiveProjectButton() {
 }
 
 /* ============================================================
+   NAV
+   ============================================================ */
+const NAV_LINKS = [
+  { label: "O mnie", href: "#o-mnie" },
+  { label: "Usługi", href: "#uslugi" },
+  { label: "Projekty", href: "#projekty" },
+  {
+    label: "Kontakt",
+    href: "https://skool.com/wiktory-ai-3521",
+    external: true,
+  },
+];
+
+/* ============================================================
    HERO
    ============================================================ */
 function HeroSection() {
@@ -235,13 +250,15 @@ function HeroSection() {
     >
       <FadeIn as="nav" delay={0} y={-20}>
         <nav className="flex justify-between px-6 md:px-10 pt-6 md:pt-8">
-          {["O mnie", "Cennik", "Projekty", "Kontakt"].map((l) => (
+          {NAV_LINKS.map((l) => (
             <a
-              key={l}
-              href="#"
+              key={l.label}
+              href={l.href}
+              target={l.external ? "_blank" : undefined}
+              rel={l.external ? "noopener noreferrer" : undefined}
               className="text-[#D7E2EA] font-medium uppercase tracking-wider text-sm md:text-lg lg:text-[1.4rem] transition-opacity duration-200 hover:opacity-70"
             >
-              {l}
+              {l.label}
             </a>
           ))}
         </nav>
@@ -385,6 +402,7 @@ function MarqueeSection() {
 function AboutSection() {
   return (
     <section
+      id="o-mnie"
       className="min-h-screen flex flex-col items-center justify-center relative px-5 sm:px-8 md:px-10 py-20"
       style={{ background: "#0C0C0C" }}
     >
@@ -493,6 +511,7 @@ const SERVICES = [
 function ServicesSection() {
   return (
     <section
+      id="uslugi"
       className="rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32"
       style={{ background: "#FFFFFF" }}
     >
@@ -675,6 +694,7 @@ function ProjectCard({
 function ProjectsSection() {
   return (
     <section
+      id="projekty"
       className="relative z-10 -mt-10 sm:-mt-12 md:-mt-14 rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32"
       style={{ background: "#0C0C0C" }}
     >
